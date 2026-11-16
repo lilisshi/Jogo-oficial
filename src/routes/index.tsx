@@ -37,7 +37,7 @@ function Dialog({ m, sound }: { m: (typeof memories)[number]; sound: boolean }) 
     <div className="dialog-box p-4 md:p-5">
       <p className="font-pixel text-[10px] text-primary">{d.who}</p>
       <p key={i} className="font-body text-2xl leading-snug mt-2 animate-in fade-in">"{d.text}"</p>
-      <button onClick={() => { blip(sound); setI(last ? 0 : i + 1); }} className="font-pixel text-[9px] mt-3 blink text-secondary">
+      <button onClick={() => { blip(sound); setI(last ? 0 : i + 1); }} className="font-pixel text-[9px] mt-3 blink text-secondary inline-flex min-h-[40px] items-center px-2 -mx-2">
         {last ? "↺ RELER" : "▼ CONTINUAR"}
       </button>
     </div>
@@ -92,7 +92,7 @@ function Quiz({ sound, achieve }: { sound: boolean; achieve: (s: string) => void
   if (i >= quiz.length) return (
     <div className="text-center"><p className="font-pixel text-sm">{score}/{quiz.length} ACERTOS</p>
       <p className="font-body text-2xl mt-3">{score === quiz.length ? "Perfeito! Recompensa: um vale-encontro romântico 💌" : "Quase! Mas eu te amo do mesmo jeito 💗"}</p>
-      <button className="pixel-btn mt-4 px-4 py-2 font-pixel text-[10px]" onClick={() => { setI(0); setScore(0); }}>JOGAR DE NOVO</button></div>
+      <button className="pixel-btn mt-4 inline-flex min-h-[40px] items-center justify-center px-4 py-2 font-pixel text-[10px]" onClick={() => { setI(0); setScore(0); }}>JOGAR DE NOVO</button></div>
   );
   const q = quiz[i]!;
   return (
@@ -126,11 +126,11 @@ function Boss({ sound, achieve }: { sound: boolean; achieve: (s: string) => void
       <p className="font-body text-2xl mt-4">{hp === 0 ? "Vitória! A saudade perdeu, mas meu amor por você aumentou. 💗" : log}</p>
       {hp > 0 ? (
         <div className="grid grid-cols-3 gap-2 mt-4">
-          <button className="pixel-btn py-2 font-pixel text-[9px]" onClick={() => atk("Abraço", 25)}>🤗 ABRAÇO</button>
-          <button className="pixel-btn py-2 font-pixel text-[9px]" onClick={() => atk("Beijo", 35)}>💋 BEIJO</button>
-          <button className="pixel-btn py-2 font-pixel text-[9px]" onClick={() => atk("Carinho", 20)}>💗 CARINHO</button>
+          <button className="pixel-btn inline-flex min-h-[40px] items-center justify-center py-2 font-pixel text-[9px]" onClick={() => atk("Abraço", 25)}>🤗 ABRAÇO</button>
+          <button className="pixel-btn inline-flex min-h-[40px] items-center justify-center py-2 font-pixel text-[9px]" onClick={() => atk("Beijo", 35)}>💋 BEIJO</button>
+          <button className="pixel-btn inline-flex min-h-[40px] items-center justify-center py-2 font-pixel text-[9px]" onClick={() => atk("Carinho", 20)}>💗 CARINHO</button>
         </div>
-      ) : <button className="pixel-btn mt-4 px-4 py-2 font-pixel text-[10px]" onClick={() => { setHp(100); setLog("A saudade voltou... lute de novo!"); }}>REVANCHE</button>}
+      ) : <button className="pixel-btn mt-4 inline-flex min-h-[40px] items-center justify-center px-4 py-2 font-pixel text-[10px]" onClick={() => { setHp(100); setLog("A saudade voltou... lute de novo!"); }}>REVANCHE</button>}
     </div>
   );
 }
@@ -176,7 +176,7 @@ function Index() {
   const pct = Math.round((done / memories.length) * 100);
 
   const hiddenHeart = (id: number, cls: string) => !found.includes(id) && (
-    <button aria-label="coração escondido" onClick={() => { blip(sound, 990); setFound((f) => [...f, id]); }} className={`absolute text-xl opacity-40 hover:opacity-100 ${cls}`}>♥</button>
+    <button aria-label="coração escondido" onClick={() => { blip(sound, 990); setFound((f) => [...f, id]); }} className={`absolute flex h-11 w-11 items-center justify-center text-2xl opacity-40 hover:opacity-100 ${cls}`}>♥</button>
   );
 
   const timeMachine = () => {
@@ -191,17 +191,17 @@ function Index() {
   return (
     <main className={`game-bg min-h-screen text-foreground ${night ? "night-mode" : ""}`}>
       <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between gap-3 px-3 py-2 bg-background/85 backdrop-blur border-b-4 border-border">
-        <button className="text-primary text-lg" onClick={() => { const n = heartClicks + 1; setHeartClicks(n); if (n === 5) achieve("Segredo: Eu te amo mais do que pizza 🍕💗"); }}>♥ ♥ ♥</button>
+        <button className="text-primary text-lg inline-flex min-h-[40px] items-center px-1" onClick={() => { const n = heartClicks + 1; setHeartClicks(n); if (n === 5) achieve("Segredo: Eu te amo mais do que pizza 🍕💗"); }}>♥ ♥ ♥</button>
         <div className="flex-1 max-w-[180px]">
           <div className="pixel-bar h-3"><div className="h-full bg-primary transition-all duration-500" style={{ width: `${pct}%` }} /></div>
           <p className="font-pixel text-[7px] mt-1 text-center text-muted-foreground">{pct}%</p>
         </div>
         <div className="flex gap-1">
-          <button onClick={() => setPanel("conquistas")} className="pixel-btn px-2 py-1 text-sm" aria-label="Conquistas">🏆</button>
-          <button onClick={() => setPanel("mochila")} className="pixel-btn px-2 py-1 text-sm" aria-label="Mochila">🎒</button>
-          <button onClick={() => setPanel("missoes")} className="pixel-btn px-2 py-1 text-sm" aria-label="Missões">📜</button>
-          <button onClick={timeMachine} className="pixel-btn px-2 py-1 text-sm" aria-label="Voltar no tempo">⏳</button>
-          <button onClick={() => setSound(!sound)} className="pixel-btn px-2 py-1 font-pixel text-[9px]" aria-label="Som">{sound ? "♪" : "✕♪"}</button>
+          <button onClick={() => setPanel("conquistas")} className="pixel-btn inline-flex min-h-[40px] min-w-[40px] items-center justify-center px-2 py-1 text-sm" aria-label="Conquistas">🏆</button>
+          <button onClick={() => setPanel("mochila")} className="pixel-btn inline-flex min-h-[40px] min-w-[40px] items-center justify-center px-2 py-1 text-sm" aria-label="Mochila">🎒</button>
+          <button onClick={() => setPanel("missoes")} className="pixel-btn inline-flex min-h-[40px] min-w-[40px] items-center justify-center px-2 py-1 text-sm" aria-label="Missões">📜</button>
+          <button onClick={timeMachine} className="pixel-btn inline-flex min-h-[40px] min-w-[40px] items-center justify-center px-2 py-1 text-sm" aria-label="Voltar no tempo">⏳</button>
+          <button onClick={() => setSound(!sound)} className="pixel-btn inline-flex min-h-[40px] min-w-[40px] items-center justify-center px-2 py-1 font-pixel text-[9px]" aria-label="Som">{sound ? "♪" : "✕♪"}</button>
         </div>
       </header>
 
@@ -282,7 +282,7 @@ function Index() {
           <img src={mapa} alt="Mapa pixel art do nosso universo" width={1280} height={768} loading="lazy" className="w-full pixelated" />
           <div className="absolute inset-0 map-fog transition-all duration-700" style={{ clipPath: `inset(0 0 0 ${pct}%)` }} />
           {memories.map((m) => seenList.includes(m.level) && (
-            <div key={m.level} className="absolute -translate-x-1/2 -translate-y-full animate-in zoom-in" style={{ left: `${m.place.x}%`, top: `${m.place.y}%` }}>
+            <div key={m.level} className={`absolute -translate-y-full animate-in zoom-in ${m.place.x >= 70 ? "-translate-x-full" : m.place.x <= 15 ? "translate-x-0" : "-translate-x-1/2"}`} style={{ left: `${m.place.x}%`, top: `${m.place.y}%` }}>
               <div className="speech px-2 py-1 font-pixel text-[7px] whitespace-nowrap">{m.place.name}</div><div className="text-center text-xl">📍</div>
             </div>))}
         </div>
@@ -323,7 +323,7 @@ function Index() {
       </section>
 
       <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 text-center relative">
-        <button onClick={() => setNight(!night)} className="absolute top-10 right-10 text-4xl" aria-label="Lua">🌙</button>
+        <button onClick={() => setNight(!night)} className="absolute top-10 right-10 flex h-11 w-11 items-center justify-center text-4xl" aria-label="Lua">🌙</button>
         <p className="font-pixel text-[10px] text-primary">★ FASE SECRETA ★</p>
         {chest === "closed" && <button onClick={() => { blip(sound, 440); setChest("opening"); setTimeout(() => setChest("open"), 1500); }} className="mt-8 text-8xl hover:scale-110 transition-transform animate-bounce" aria-label="Abrir baú">🧰</button>}
         {chest === "opening" && <div className="fixed inset-0 z-[70] bg-background flex items-center justify-center"><div className="chest-light" /></div>}
