@@ -25,7 +25,7 @@ function Level({ m, onSeen }: { m: (typeof memories)[number]; onSeen: (l: number
   const [seen, setSeen] = useState(false);
   useEffect(() => {
     const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setSeen(true); onSeen(m.level); io.disconnect(); }
+      if (e?.isIntersecting) { setSeen(true); onSeen(m.level); io.disconnect(); }
     }, { threshold: 0.5 });
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
