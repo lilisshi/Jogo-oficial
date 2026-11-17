@@ -47,3 +47,12 @@ export const quiz = [
 ];
 
 export const gallery = ["Nossa primeira foto", "Aquele dia engraçado", "Pôr do sol juntos", "Selfie boba", "Encontro especial", "Um mês de nós"];
+
+export const coupons = [
+  { id: "abraco", icon: "🤗", title: "Vale 1 abraço apertado", text: "Válido a qualquer hora, sem limite de duração." },
+  { id: "cinema", icon: "🎬", title: "Vale 1 filme escolhido por você", text: "Sem reclamar da escolha. Pipoca inclusa." },
+  { id: "jantar", icon: "🍝", title: "Vale 1 jantar romântico", text: "Eu organizo tudo, você só aparece lindo." },
+  { id: "massagem", icon: "💆", title: "Vale 1 massagem", text: "15 minutos de carinho nas costas." },
+  { id: "pizza", icon: "🍕", title: "Vale 1 noite de pizza", text: "Sabor à sua escolha (até meia de brócolis)." },
+  { id: "desejo", icon: "⭐", title: "Vale 1 desejo", text: "Qualquer pedido fofo que você quiser." },
+];

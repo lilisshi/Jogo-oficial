@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { memories, inventory, lines, quiz, gallery } from "@/data/memories";
+import { memories, inventory, lines, quiz, gallery, coupons } from "@/data/memories";
 import casal from "@/assets/casal-pixel.png";
 import mapa from "@/assets/mapa-pixel.jpg";
 import boss from "@/assets/boss-saudade.png";
@@ -131,6 +131,35 @@ function Boss({ sound, achieve }: { sound: boolean; achieve: (s: string) => void
           <button className="pixel-btn inline-flex min-h-[40px] items-center justify-center py-2 font-pixel text-[9px]" onClick={() => atk("Carinho", 20)}>💗 CARINHO</button>
         </div>
       ) : <button className="pixel-btn mt-4 inline-flex min-h-[40px] items-center justify-center px-4 py-2 font-pixel text-[10px]" onClick={() => { setHp(100); setLog("A saudade voltou... lute de novo!"); }}>REVANCHE</button>}
+    </div>
+  );
+}
+
+function Coupons({ sound, achieve }: { sound: boolean; achieve: (s: string) => void }) {
+  const KEY = "love-exe-coupons";
+  const [used, setUsed] = useState<Record<string, string>>({});
+  useEffect(() => { try { setUsed(JSON.parse(localStorage.getItem(KEY) || "{}")); } catch { /* ignore */ } }, []);
+  const save = (n: Record<string, string>) => { setUsed(n); localStorage.setItem(KEY, JSON.stringify(n)); };
+  return (
+    <div className="max-w-3xl w-full">
+      <p className="font-pixel text-[10px] text-primary text-center mb-2">CUPONS DE AMOR</p>
+      <p className="font-body text-xl text-center text-muted-foreground mb-6">{Object.keys(used).length}/{coupons.length} resgatados</p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {coupons.map((c) => { const d = used[c.id]; return (
+          <div key={c.id} className={`pixel-card p-4 ${d ? "opacity-60" : ""}`}>
+            <div className="flex gap-3 items-start"><span className="text-3xl">{c.icon}</span>
+              <div className="flex-1"><p className="font-pixel text-[9px] leading-relaxed">{c.title}</p><p className="font-body text-lg mt-1">{c.text}</p></div></div>
+            {d ? (
+              <div className="flex items-center justify-between mt-3"><span className="font-pixel text-[8px] text-secondary">✓ RESGATADO EM {d}</span>
+                <button className="font-pixel text-[8px] underline min-h-[40px] px-1" onClick={() => { const n = { ...used }; delete n[c.id]; save(n); }}>DESFAZER</button></div>
+            ) : (
+              <button className="pixel-btn mt-3 w-full inline-flex min-h-[40px] items-center justify-center font-pixel text-[9px]" onClick={() => {
+                blip(sound, 880); const n = { ...used, [c.id]: new Date().toLocaleDateString("pt-BR") }; save(n);
+                achieve(`Cupom resgatado: ${c.title}`);
+              }}>RESGATAR</button>
+            )}
+          </div>); })}
+      </div>
     </div>
   );
 }
@@ -318,6 +347,7 @@ function Index() {
       <Level m={memories[4]!} onSeen={onSeen} sound={sound} />
 
       <Act n={3} title="O nosso futuro" />
+      <section className="px-4 py-12 flex justify-center"><Coupons sound={sound} achieve={achieve} /></section>
       <section className="px-4 py-12 flex justify-center">
         <div className="pixel-card max-w-xl w-full p-6"><p className="font-pixel text-[10px] text-secondary mb-3">MINIGAME</p><Quiz sound={sound} achieve={achieve} /></div>
       </section>
