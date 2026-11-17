@@ -142,15 +142,15 @@ function Coupons({ sound, achieve }: { sound: boolean; achieve: (s: string) => v
   const save = (n: Record<string, string>) => { setUsed(n); localStorage.setItem(KEY, JSON.stringify(n)); };
   return (
     <div className="max-w-3xl w-full">
-      <p className="font-pixel text-[10px] text-primary text-center mb-2">CUPONS DE AMOR</p>
+      <p className="font-pixel text-[10px] text-primary text-center mb-2 leading-relaxed">CUPONS DE AMOR</p>
       <p className="font-body text-xl text-center text-muted-foreground mb-6">{Object.keys(used).length}/{coupons.length} resgatados</p>
       <div className="grid gap-3 sm:grid-cols-2">
         {coupons.map((c) => { const d = used[c.id]; return (
           <div key={c.id} className={`pixel-card p-4 ${d ? "opacity-60" : ""}`}>
-            <div className="flex gap-3 items-start"><span className="text-3xl">{c.icon}</span>
-              <div className="flex-1"><p className="font-pixel text-[9px] leading-relaxed">{c.title}</p><p className="font-body text-lg mt-1">{c.text}</p></div></div>
+            <div className="flex gap-3 items-start"><span className="text-3xl shrink-0">{c.icon}</span>
+              <div className="flex-1 min-w-0"><p className="font-pixel text-[9px] leading-relaxed break-words">{c.title}</p><p className="font-body text-lg mt-1">{c.text}</p></div></div>
             {d ? (
-              <div className="flex items-center justify-between mt-3"><span className="font-pixel text-[8px] text-secondary">✓ RESGATADO EM {d}</span>
+              <div className="flex flex-wrap items-center justify-between gap-2 mt-3"><span className="font-pixel text-[8px] leading-relaxed text-secondary min-w-0">✓ RESGATADO EM {d}</span>
                 <button className="font-pixel text-[8px] underline min-h-[40px] px-1" onClick={() => { const n = { ...used }; delete n[c.id]; save(n); }}>DESFAZER</button></div>
             ) : (
               <button className="pixel-btn mt-3 w-full inline-flex min-h-[40px] items-center justify-center font-pixel text-[9px]" onClick={() => {
