@@ -7,17 +7,17 @@ export type Memory = {
 };
 
 export const memories: Memory[] = [
-  { level: 1, title: "O dia em que tudo começou", date: "?? / ?? / 2026", emoji: "💬", time: "noite",
-    dialog: [{ who: "LIVIA", text: "Naquele dia eu ainda não sabia, mas você estava prestes a se tornar uma das minhas pessoas favoritas..." }, { who: "WENDEL", text: "Oi! Tudo bem? 😊" }, { who: "LIVIA", text: "E foi assim, com um simples 'oi', que o jogo começou." }],
+  { level: 1, title: "O dia em que tudo começou", date: "15 / 11 / 2023", emoji: "💬", time: "tarde",
+    dialog: [{ who: "LIVIA", text: "Naquele dia eu ainda não sabia, mas você estava prestes a se tornar uma das minhas pessoas favoritas..." }, { who: "WENDEL", text: "Onde eu consigo um chapéu desses? 😊" }, { who: "LIVIA", text: "E foi assim, com um simples chapéu, que o jogo começou." }],
     achievement: { icon: "💬", title: "Primeiro contato", sub: "Duas histórias se cruzaram" }, place: { name: "Onde nos conhecemos", x: 22, y: 30 } },
-  { level: 2, title: "Nosso primeiro encontro", date: "?? / ?? / 2026", emoji: "☕", time: "dia",
+  { level: 2, title: "Nosso primeiro encontro", date: "24 / 10 / 2026", emoji: "☕", time: "dia",
     dialog: [{ who: "LIVIA", text: "Eu estava tão nervosa que ensaiei o 'oi' umas dez vezes no caminho." }, { who: "WENDEL", text: "E eu fingindo que estava tranquilo..." }, { who: "LIVIA", text: "Quando te vi, o nervosismo virou sorriso." }],
     achievement: { icon: "💘", title: "Primeiro encontro", sub: "A aventura começou" }, place: { name: "Primeiro encontro", x: 50, y: 50 } },
-  { level: 3, title: "O primeiro beijo", date: "?? / ?? / 2026", emoji: "💋", time: "noite",
+  { level: 3, title: "O primeiro beijo", date: "24 / 10 / 2026", emoji: "💋", time: "tarde",
     dialog: [{ who: "LIVIA", text: "Estrelinhas, borboletas e um coração gigante." }, { who: "LIVIA", text: "Combo perfeito. Corações sincronizados." }],
     achievement: { icon: "💋", title: "Primeiro beijo", sub: "Corações sincronizados" }, place: { name: "Primeiro beijo", x: 77, y: 14 } },
-  { level: 4, title: "Namoro desbloqueado!", date: "16 / 10 / 2026", emoji: "🏆", time: "dia",
-    dialog: [{ who: "WENDEL", text: "Quer namorar comigo?" }, { who: "LIVIA", text: "SIM! Novo status: namorando 💗" }],
+  { level: 4, title: "Namoro desbloqueado!", date: "19 / 10 / 2026", emoji: "🏆", time: "dia",
+    dialog: [{ who: "WENDEL", text: "to namorando" }, { who: "LIVIA", text: "feliz 3 dias de namoro Novo status: namorando 💗" }],
     achievement: { icon: "💍", title: "Namoro oficial", sub: "Nova fase desbloqueada" }, place: { name: "Início do namoro", x: 86, y: 50 } },
   { level: 5, title: "Nosso primeiro mês", date: "16 / 11 / 2026", emoji: "🎂", time: "noite",
     dialog: [{ who: "LIVIA", text: "Um mês de risadas, carinho e saudade." }, { who: "LIVIA", text: "E a próxima fase ainda está sendo escrita..." }],
@@ -41,7 +41,7 @@ export const lines = [
 ];
 
 export const quiz = [
-  { q: "Onde a gente se conheceu?", a: ["Internet", "Faculdade", "Festa"], c: 0 },
+  { q: "Onde a gente se conheceu?", a: ["FEJEF", "ETEC", "Festa de Halloween"], c: 0 },
   { q: "Qual foi a primeira coisa que fizemos juntos?", a: ["Cinema", "Café", "Parque"], c: 1 },
   { q: "Quantos meses de namoro estamos comemorando?", a: ["1", "6", "12"], c: 0 },
 ];
