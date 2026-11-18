@@ -1,6 +1,6 @@
 // Textos de exemplo — troque pelas memórias reais de vocês.
 export type Memory = {
-  level: number; title: string; date: string; emoji: string; time: "dia" | "noite";
+  level: number; title: string; date: string; emoji: string; time: "dia" | "tarde" | "noite";
   dialog: { who: "LIVIA" | "WENDEL"; text: string }[];
   achievement: { icon: string; title: string; sub: string };
   place: { name: string; x: number; y: number };
