@@ -1,4 +1,9 @@
 // Textos de exemplo — troque pelas memórias reais de vocês.
+import casalNaCama from "@/assets/casal-na-cama.png.asset.json";
+import casalDeOculos from "@/assets/casal-de-oculos.png.asset.json";
+import casalNoShopping from "@/assets/casal-no-shopping.png.asset.json";
+import casalPerto from "@/assets/casal-perto.png.asset.json";
+import passeioDeCarro from "@/assets/passeio-de-carro.png.asset.json";
 export type Memory = {
   level: number; title: string; date: string; emoji: string; time: "dia" | "tarde" | "noite";
   dialog: { who: "LIVIA" | "WENDEL"; text: string }[];
@@ -46,7 +51,14 @@ export const quiz = [
   { q: "Quantos meses de namoro estamos comemorando?", a: ["1", "6", "12"], c: 0 },
 ];
 
-export const gallery = ["Nossa primeira foto", "Aquele dia engraçado", "Pôr do sol juntos", "Selfie boba", "Encontro especial", "Um mês de nós"];
+export const gallery = [
+  { caption: "Nossa primeira foto", img: casalNaCama.url },
+  { caption: "Aquele dia engraçado", img: casalDeOculos.url },
+  { caption: "Primeira foto boa", img: casalNoShopping.url },
+  { caption: "Selfie boba", img: casalPerto.url },
+  { caption: "Passeio legal", img: passeioDeCarro.url },
+  { caption: "Escrevendo", img: "" },
+];
 
 export const coupons = [
   { id: "abraco", icon: "🤗", title: "Vale 1 abraço apertado", text: "Válido a qualquer hora, sem limite de duração." },

@@ -333,10 +333,17 @@ function Index() {
         <p className="font-pixel text-[10px] text-primary text-center mb-6">GALERIA DESBLOQUEÁVEL</p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {gallery.map((g, k) => { const f = flipped.includes(k); return (
-            <button key={g} onClick={() => { blip(sound); setFlipped((x) => (f ? x.filter((y) => y !== k) : [...x, k])); }} className="flip aspect-[3/4]" data-flipped={f}>
+            <button key={g.caption} onClick={() => { blip(sound); setFlipped((x) => (f ? x.filter((y) => y !== k) : [...x, k])); }} className="flip aspect-[3/4]" data-flipped={f}>
               <div className="flip-inner">
                 <div className="flip-face pixel-card flex items-center justify-center font-pixel text-2xl text-primary">?</div>
-                <div className="flip-face flip-back pixel-card flex flex-col items-center justify-center p-3"><span className="text-5xl">📸</span><span className="font-body text-lg mt-2">{g}</span></div>
+                <div className="flip-face flip-back pixel-card flex flex-col p-2">
+                  {g.img ? (
+                    <img src={g.img} alt={g.caption} loading="lazy" className="min-h-0 w-full flex-1 object-cover" />
+                  ) : (
+                    <div className="flex min-h-0 flex-1 items-center justify-center text-5xl">✍️</div>
+                  )}
+                  <span className="mt-2 shrink-0 text-center font-body text-lg leading-none">{g.caption}</span>
+                </div>
               </div>
             </button>); })}
         </div>
