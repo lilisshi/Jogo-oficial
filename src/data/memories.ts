@@ -1,9 +1,9 @@
 // Textos de exemplo — troque pelas memórias reais de vocês.
-import casalNaCama from "@/assets/casal-na-cama.png.asset.json";
-import casalDeOculos from "@/assets/casal-de-oculos.png.asset.json";
-import casalNoShopping from "@/assets/casal-no-shopping.png.asset.json";
-import casalPerto from "@/assets/casal-perto.png.asset.json";
-import passeioDeCarro from "@/assets/passeio-de-carro.png.asset.json";
+import casalNaCama from "@/assets/casal-na-cama.png";
+import casalDeOculos from "@/assets/casal-de-oculos.png";
+import casalNoShopping from "@/assets/casal-no-shopping.png";
+import casalPerto from "@/assets/casal-perto.png";
+import passeioDeCarro from "@/assets/passeio-de-carro.png";
 export type Memory = {
   level: number; title: string; date: string; emoji: string; time: "dia" | "tarde" | "noite";
   dialog: { who: "LIVIA" | "WENDEL"; text: string }[];
@@ -52,11 +52,11 @@ export const quiz = [
 ];
 
 export const gallery = [
-  { caption: "Nossa primeira foto", img: casalNaCama.url },
-  { caption: "Aquele dia engraçado", img: casalDeOculos.url },
-  { caption: "Primeira foto boa", img: casalNoShopping.url },
-  { caption: "Selfie boba", img: casalPerto.url },
-  { caption: "Passeio legal", img: passeioDeCarro.url },
+  { caption: "Nossa primeira foto", img: casalNaCama },
+  { caption: "Aquele dia engraçado", img: casalDeOculos },
+  { caption: "Primeira foto boa", img: casalNoShopping },
+  { caption: "Selfie boba", img: casalPerto },
+  { caption: "Passeio legal", img: passeioDeCarro },
   { caption: "Escrevendo", img: "" },
 ];
 
