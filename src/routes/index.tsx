@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { memories, inventory, lines, quiz, gallery, coupons } from "@/data/memories";
+import { memories, inventory, lines, quiz, gallery, coupons, roadTrip } from "@/data/memories";
 import casal from "@/assets/casal-pixel.png";
 import mapa from "@/assets/mapa-pixel.jpg";
 import boss from "@/assets/boss-saudade.png";
@@ -161,6 +161,54 @@ function Coupons({ sound, achieve }: { sound: boolean; achieve: (s: string) => v
           </div>); })}
       </div>
     </div>
+  );
+}
+
+function RoadTrip({ sound, achieve }: { sound: boolean; achieve: (s: string) => void }) {
+  const ref = useRef<HTMLElement>(null);
+  const [go, setGo] = useState(false);
+  const [stop, setStop] = useState(0);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { setGo(true); io.disconnect(); } }, { threshold: 0.4 });
+    if (ref.current) io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!go || done) return;
+    const t1 = setTimeout(() => setStop(1), 2500);
+    const t2 = setTimeout(() => setStop(2), 5000);
+    const t3 = setTimeout(() => { setDone(true); achieve("🚌 Primeira viagem juntos!"); }, 7500);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [go, done, achieve]);
+  const pos = done ? 88 : stop === 2 ? 70 : stop === 1 ? 38 : 4;
+  return (
+    <section ref={ref} className="px-4 py-20 flex flex-col items-center overflow-hidden">
+      <p className="font-pixel text-[10px] text-primary mb-2">FASE BÔNUS: ROAD TRIP</p>
+      <p className="font-body text-2xl text-muted-foreground mb-8 text-center">De ônibus até {roadTrip.to.toLowerCase()} 🚌</p>
+      <div className="relative max-w-3xl w-full">
+        <div className="flex justify-between font-pixel text-[8px] md:text-[10px] mb-3">
+          <span>{roadTrip.from}</span><span>{roadTrip.to}</span>
+        </div>
+        <div className="relative h-16">
+          <div className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 bg-border" />
+          <div className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 border-t-2 border-dashed border-muted-foreground/50" />
+          {roadTrip.stops.map((s, k) => (
+            <div key={s.name} className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-xl transition ${stop >= k || done ? "" : "opacity-30 grayscale"}`} style={{ left: `${[4, 38, 88][k]}%` }}>🚏</div>
+          ))}
+          <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-4xl transition-[left] duration-[2400ms] ease-in-out" style={{ left: `${pos}%` }}>🚌</div>
+        </div>
+        <div className="dialog-box p-4 mt-6 min-h-28">
+          <p className="font-pixel text-[10px] text-secondary">{(done ? roadTrip.stops[2] : roadTrip.stops[stop])!.name.toUpperCase()}</p>
+          <p key={done ? "fim" : stop} className="font-body text-2xl leading-snug mt-2 animate-in fade-in">
+            {done ? "Chegamos! E a melhor parte da viagem foi ir com você. 💗" : roadTrip.stops[stop]!.text}
+          </p>
+        </div>
+        {done && (
+          <button onClick={() => { blip(sound); setDone(false); setStop(0); setGo(false); setTimeout(() => setGo(true), 50); }} className="pixel-btn mt-4 mx-auto flex min-h-[40px] items-center px-4 py-2 font-pixel text-[9px]">↺ VIAJAR DE NOVO</button>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -354,6 +402,8 @@ function Index() {
       <Level m={memories[4]!} onSeen={onSeen} sound={sound} />
 
       <Act n={3} title="O nosso futuro" />
+      <RoadTrip sound={sound} achieve={achieve} />
+      <Level m={memories[5]!} onSeen={onSeen} sound={sound} />
       <section className="px-4 py-12 flex justify-center"><Coupons sound={sound} achieve={achieve} /></section>
       <section className="px-4 py-12 flex justify-center">
         <div className="pixel-card max-w-xl w-full p-6"><p className="font-pixel text-[10px] text-secondary mb-3">MINIGAME</p><Quiz sound={sound} achieve={achieve} /></div>

@@ -27,7 +27,21 @@ export const memories: Memory[] = [
   { level: 5, title: "Nosso primeiro mês", date: "16 / 11 / 2026", emoji: "🎂", time: "noite",
     dialog: [{ who: "LIVIA", text: "Um mês de risadas, carinho e saudade." }, { who: "LIVIA", text: "E a próxima fase ainda está sendo escrita..." }],
     achievement: { icon: "🎂", title: "Um mês de nós", sub: "Recompensa especial" }, place: { name: "Um passeio especial", x: 40, y: 84 } },
+  { level: 6, title: "Viagem a São José do Rio Preto", date: "?? / ?? / 2026", emoji: "🚌", time: "dia",
+    dialog: [{ who: "LIVIA", text: "Nossa primeira viagem juntos! Horas de estrada que passaram voando." }, { who: "WENDEL", text: "Melhor companhia de viagem impossível. 🚌💗" }, { who: "LIVIA", text: "Rio Preto ganhou um lugar especial no nosso mapa." }],
+    achievement: { icon: "🚌", title: "Primeira viagem", sub: "Rio Preto desbloqueada" }, place: { name: "São José do Rio Preto", x: 62, y: 66 } },
 ];
+
+// Textos de exemplo da viagem — troque pelas memórias reais de vocês.
+export const roadTrip = {
+  from: "NOSSA CIDADE",
+  to: "SÃO JOSÉ DO RIO PRETO",
+  stops: [
+    { name: "Rodoviária", text: "Onde a aventura começou: mochilas prontas e coração acelerado." },
+    { name: "Na estrada", text: "Janelinha, música e conversa boa o caminho inteiro." },
+    { name: "Chegada em Rio Preto", text: "Chegamos! Uma cidade nova pra explorar juntos." },
+  ],
+};
 
 export const inventory = [
   { icon: "🎟️", name: "Ingresso", text: "Guardado do nosso passeio especial." },
