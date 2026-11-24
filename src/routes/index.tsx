@@ -164,6 +164,101 @@ function Coupons({ sound, achieve }: { sound: boolean; achieve: (s: string) => v
   );
 }
 
+type Ticket = { protocol: string; kind: "carinho" | "reclamacao"; text: string; date: string };
+
+function SupportCenter({ sound, achieve }: { sound: boolean; achieve: (s: string) => void }) {
+  const KEY = "love-exe-tickets";
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [mode, setMode] = useState<null | "carinho" | "reclamacao">(null);
+  const [text, setText] = useState("");
+  const [sent, setSent] = useState<Ticket | null>(null);
+  useEffect(() => { try { setTickets(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch { /* ignore */ } }, []);
+  const carinhoOptions = ["Abraço apertado", "Beijo demorado", "Cafuné até dormir", "Dengo e atenção total"];
+  const openTicket = (kind: "carinho" | "reclamacao", t: string) => {
+    blip(sound, 990);
+    const tk: Ticket = {
+      protocol: `AMOR-${String(tickets.length + 1).padStart(3, "0")}`,
+      kind, text: t, date: new Date().toLocaleDateString("pt-BR"),
+    };
+    const n = [...tickets, tk]; setTickets(n); localStorage.setItem(KEY, JSON.stringify(n));
+    setSent(tk); setMode(null); setText("");
+    achieve(kind === "carinho" ? "💗 Carinho solicitado com sucesso!" : "📢 Reclamação registrada com amor!");
+  };
+  return (
+    <div className="max-w-3xl w-full">
+      <p className="font-pixel text-[10px] text-primary text-center mb-2 leading-relaxed">CENTRAL DE ATENDIMENTO DA NAMORADA</p>
+      <p className="font-body text-xl text-center text-muted-foreground mb-4">Atendimento 24h • 7 dias por semana • feriados inclusos</p>
+      <div className="pixel-card p-4 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="font-pixel text-[8px] leading-relaxed">ATENDENTE: LIVIA 💗</p>
+          <p className="font-pixel text-[8px] leading-relaxed text-secondary"><span className="blink">●</span> ONLINE</p>
+        </div>
+        <p className="font-body text-lg mt-2">Você é o único na fila. Sempre. 💕</p>
+      </div>
+      {!sent && !mode && (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <button className="pixel-card p-5 text-left min-h-[40px]" onClick={() => { blip(sound); setMode("carinho"); }}>
+            <p className="text-3xl">💗</p><p className="font-pixel text-[9px] mt-2 leading-relaxed">SOLICITAR CARINHO</p>
+            <p className="font-body text-lg mt-1">Atendimento imediato, sem espera.</p>
+          </button>
+          <button className="pixel-card p-5 text-left min-h-[40px]" onClick={() => { blip(sound); setMode("reclamacao"); }}>
+            <p className="text-3xl">📢</p><p className="font-pixel text-[9px] mt-2 leading-relaxed">FAZER RECLAMAÇÃO</p>
+            <p className="font-body text-lg mt-1">Será analisada com muito amor (e um beijo).</p>
+          </button>
+        </div>
+      )}
+      {mode === "carinho" && !sent && (
+        <div className="pixel-card p-4">
+          <p className="font-pixel text-[9px] mb-3 leading-relaxed">ESCOLHA SEU PEDIDO:</p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {carinhoOptions.map((o) => (
+              <button key={o} className="pixel-option p-3 min-h-[40px] font-body text-xl text-left" onClick={() => openTicket("carinho", o)}>{o}</button>
+            ))}
+          </div>
+          <button className="font-pixel text-[8px] underline mt-3 min-h-[40px] px-1" onClick={() => setMode(null)}>VOLTAR</button>
+        </div>
+      )}
+      {mode === "reclamacao" && !sent && (
+        <div className="pixel-card p-4">
+          <p className="font-pixel text-[9px] mb-3 leading-relaxed">DESCREVA SUA RECLAMAÇÃO:</p>
+          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} placeholder="Ex: demorou pra responder no whats..."
+            className="w-full p-3 font-body text-xl bg-card border-3 border-border outline-none resize-none" style={{ borderWidth: 3 }} />
+          <div className="flex flex-wrap gap-2 mt-3">
+            <button disabled={!text.trim()} className="pixel-btn inline-flex min-h-[40px] items-center px-4 py-2 font-pixel text-[9px] disabled:opacity-50"
+              onClick={() => openTicket("reclamacao", text.trim())}>ENVIAR</button>
+            <button className="font-pixel text-[8px] underline min-h-[40px] px-1" onClick={() => setMode(null)}>VOLTAR</button>
+          </div>
+        </div>
+      )}
+      {sent && (
+        <div className="dialog-box p-5 text-center">
+          <p className="font-pixel text-[9px] text-secondary leading-relaxed">PROTOCOLO {sent.protocol}</p>
+          <p className="font-body text-2xl mt-3 leading-snug">
+            {sent.kind === "carinho"
+              ? `Pedido de "${sent.text}" aprovado! Prazo de entrega: imediato, no próximo encontro. 💗`
+              : "Reclamação registrada! Nossa equipe (eu) já está resolvendo. Compensação: 1 beijo + 1 abraço. 😘"}
+          </p>
+          <button className="pixel-btn mt-4 inline-flex min-h-[40px] items-center px-4 py-2 font-pixel text-[9px]" onClick={() => { blip(sound); setSent(null); }}>NOVO ATENDIMENTO</button>
+        </div>
+      )}
+      {tickets.length > 0 && (
+        <div className="mt-6">
+          <p className="font-pixel text-[8px] text-muted-foreground mb-2 leading-relaxed">HISTÓRICO DE ATENDIMENTOS ({tickets.length})</p>
+          <div className="grid gap-2">
+            {tickets.slice().reverse().map((t) => (
+              <div key={t.protocol} className="pixel-card p-3 flex flex-wrap items-center justify-between gap-2">
+                <div className="min-w-0"><p className="font-pixel text-[8px] leading-relaxed">{t.protocol} {t.kind === "carinho" ? "💗" : "📢"}</p>
+                  <p className="font-body text-lg break-words">{t.text}</p></div>
+                <p className="font-pixel text-[8px] text-secondary shrink-0">✓ {t.date}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function RoadTrip({ sound, achieve }: { sound: boolean; achieve: (s: string) => void }) {
   const ref = useRef<HTMLElement>(null);
   const [go, setGo] = useState(false);
@@ -405,6 +500,7 @@ function Index() {
       <RoadTrip sound={sound} achieve={achieve} />
       <Level m={memories[5]!} onSeen={onSeen} sound={sound} />
       <section className="px-4 py-12 flex justify-center"><Coupons sound={sound} achieve={achieve} /></section>
+      <section className="px-4 py-12 flex justify-center"><SupportCenter sound={sound} achieve={achieve} /></section>
       <section className="px-4 py-12 flex justify-center">
         <div className="pixel-card max-w-xl w-full p-6"><p className="font-pixel text-[10px] text-secondary mb-3">MINIGAME</p><Quiz sound={sound} achieve={achieve} /></div>
       </section>
